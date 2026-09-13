@@ -9,7 +9,7 @@ public class Square(Vector2 startPosition)
     public const float Padding = 12f;
     public const float SymbolThickness = 6f;
 
-    public char CurrentSymbole 
+    public char Value 
     { 
         get;
         set
@@ -21,18 +21,10 @@ public class Square(Vector2 startPosition)
 
     public void Display()
     {
-        if (CurrentSymbole == 'X')
+        if (Value == 'X')
             DrawXSymbol();
-        else if (CurrentSymbole == 'O')
+        else if (Value == 'O')
             DrawOSymbol();
-    }
-
-    public bool IsInside(Vector2 mousePosition)
-    {
-        return mousePosition.X >= startPosition.X
-            && mousePosition.X <= startPosition.X + Size
-            && mousePosition.Y >= startPosition.Y
-            && mousePosition.Y <= startPosition.Y + Size;
     }
 
     private void DrawXSymbol()
@@ -52,5 +44,13 @@ public class Square(Vector2 startPosition)
 
         Raylib.DrawCircleV(center, Size / 2 - Padding / 2, Color.Orange);
         Raylib.DrawCircleV(center, Size / 3 + 4f, Color.RayWhite);
+    }
+
+    public bool IsSquareClicked(Vector2 mousePosition)
+    {
+        return mousePosition.X >= startPosition.X
+            && mousePosition.X <= startPosition.X + Size
+            && mousePosition.Y >= startPosition.Y
+            && mousePosition.Y <= startPosition.Y + Size;
     }
 }

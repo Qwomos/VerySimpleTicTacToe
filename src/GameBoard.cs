@@ -8,6 +8,9 @@ public class GameBoard
 
     public void UpdateGame(Vector2 mousePosition)
     {
+        if (grid.Winner is not null)
+            return;
+
         if (IsGridClicked(mousePosition))
             grid.OnClick(mousePosition);
     }
