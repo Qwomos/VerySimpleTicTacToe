@@ -40,10 +40,15 @@ public class Square(Vector2 startPosition)
 
     private void DrawOSymbol()
     {
-        Vector2 center = new(startPosition.X + Size / 2, startPosition.Y + Size / 2);
+        Vector2 center = GetCenter();
 
         Raylib.DrawCircleV(center, Size / 2 - Padding / 2, Color.Orange);
         Raylib.DrawCircleV(center, Size / 3 + 4f, Color.RayWhite);
+    }
+
+    public Vector2 GetCenter()
+    {
+        return new(startPosition.X + Size / 2, startPosition.Y + Size / 2);
     }
 
     public bool IsSquareClicked(Vector2 mousePosition)

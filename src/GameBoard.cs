@@ -4,6 +4,8 @@ namespace VerySimpleTicTacToe;
 
 public class GameBoard
 {
+    public const int Margin = 20;
+
     private readonly Grid grid = new();
 
     public void UpdateGame(Vector2 mousePosition)
@@ -17,10 +19,10 @@ public class GameBoard
 
     private static bool IsGridClicked(Vector2 mousePosition)
     {
-        return mousePosition.X >= Grid.Margin
-            && mousePosition.X <= Grid.Length + Grid.Margin
-            && mousePosition.Y >= Grid.Margin
-            && mousePosition.Y <= Grid.Length + Grid.Margin;
+        return mousePosition.X >= Margin
+            && mousePosition.X <= Grid.Length + Margin
+            && mousePosition.Y >= Margin
+            && mousePosition.Y <= Grid.Length + Margin;
     }
 
     public void Display()
