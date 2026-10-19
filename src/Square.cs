@@ -9,15 +9,19 @@ public class Square(Vector2 startPosition)
     public const float Padding = 12f;
     public const float SymbolThickness = 6f;
 
-    public char Value 
-    { 
-        get;
-        set
+    public char Value { get; private set; } = ' ';
+
+    public bool SetValue(char playerSymbol)
+    {
+        if (playerSymbol == ' ' || Value == ' ')
         {
-            if (value == ' ' || field == ' ')
-                field = value;
+            Value = playerSymbol;
+
+            return true;
         }
-    } = ' ';
+
+        return false;
+    }
 
     public void Display()
     {
@@ -29,10 +33,10 @@ public class Square(Vector2 startPosition)
 
     private void DrawXSymbol()
     {
-       Vector2 firstDiagonalStart = new(startPosition.X + Padding, startPosition.Y + Padding);
-       Vector2 firstDiagonalEnd = new(startPosition.X + Size - Padding, startPosition.Y + Size - Padding);
-       Vector2 secondDiagonalStart = new(startPosition.X + Size - Padding, startPosition.Y + Padding);
-       Vector2 secondDiagonalEnd = new(startPosition.X + Padding, startPosition.Y + Size - Padding);
+       var firstDiagonalStart = new Vector2(startPosition.X + Padding, startPosition.Y + Padding);
+       var firstDiagonalEnd = new Vector2(startPosition.X + Size - Padding, startPosition.Y + Size - Padding);
+       var secondDiagonalStart = new Vector2(startPosition.X + Size - Padding, startPosition.Y + Padding);
+       var secondDiagonalEnd = new Vector2(startPosition.X + Padding, startPosition.Y + Size - Padding);
 
        Raylib.DrawLineEx(firstDiagonalStart, firstDiagonalEnd, SymbolThickness, Color.SkyBlue);
        Raylib.DrawLineEx(secondDiagonalStart, secondDiagonalEnd, SymbolThickness, Color.SkyBlue);

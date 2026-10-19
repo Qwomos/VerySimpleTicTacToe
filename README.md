@@ -1,5 +1,5 @@
 # VerySimpleTicTacToe
-Simple game of Tic tac toe written in C# with Raylib-cs and .NET.
+Simple game of Tic tac toe written in C# with Raylib-cs and .NET
 
 ## Prerequisite
 

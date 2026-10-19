@@ -14,6 +14,7 @@ while (!Raylib.WindowShouldClose())
     if (Raylib.IsMouseButtonPressed(MouseButton.Left))
     {
         var mousePosition = Raylib.GetMousePosition();
+        
         gameBoard.UpdateGame(mousePosition);
     }
 

@@ -11,8 +11,7 @@ public class Grid
     private readonly Square[] squares = new Square[9];
     private char playerSymbol = 'X';
     private (int, int, LineType)? WinningSquaresPair;
-
-    public char? Winner { get; private set; }
+    private byte turnsCount = 0;
 
     public Grid()
     {
@@ -53,6 +52,9 @@ public class Grid
         Raylib.DrawRectangle(GameBoard.Margin, Square.Size * 2 + LineWidth + GameBoard.Margin, Length, LineWidth, Color.DarkGray); //Second horizontal line
     }
 
+    /// <summary>
+    /// If there is a winner, draw the winning line based of the winning squares pair
+    /// </summary>
     private void DrawWinningLine()
     {
         if (!WinningSquaresPair.HasValue)
@@ -99,29 +101,45 @@ public class Grid
 
         }
 
-        Raylib.DrawLineEx(startPosition, endPosition, 10f, Color.Magenta);
+        Raylib.DrawLineEx(startPosition, endPosition, 2f, Color.Gray);
     }
 
-    public void OnClick(Vector2 mousePosition)
+    /// <summary>
+    /// Check which square is clicked, validate if a player has won and toggle player turn.
+    /// </summary>
+    /// <param name="mousePosition">Mouse position where the click happened</param>
+    /// <returns>Winner symbol or null</returns>
+    public char? Update(Vector2 mousePosition)
     {
         foreach (var square in squares)
         {
             if (square.IsSquareClicked(mousePosition))
             {
-                square.Value = playerSymbol;
+                if (square.SetValue(playerSymbol))
+                {
+                    WinningSquaresPair = ValidateWinner();
 
-                WinningSquaresPair = ValidateWinner();
-
-                if (WinningSquaresPair.HasValue)
-                    Winner = playerSymbol;
-                else
-                    TogglePlayerTurn();
+                    if (WinningSquaresPair.HasValue)
+                        return playerSymbol;
+                    else
+                    {
+                        TogglePlayerTurn();
+                        turnsCount++;
+                    }
+                        
+                } 
 
                 break;
             }
         }
+
+        return TieSymboleOrNull();
     }
 
+    /// <summary>
+    /// Validate if the current player won.
+    /// </summary>
+    /// <returns>Tuple with the indexes of the start and end squares of the winning line with the type of line (Horizontal, Vertical or Diagonal)</returns>
     private (int, int, LineType)? ValidateWinner()
     {
         /*
@@ -155,6 +173,14 @@ public class Grid
             playerSymbol = 'O';
         else
             playerSymbol = 'X';
+    }
+
+    private char? TieSymboleOrNull()
+    {
+        if (turnsCount == 9)
+            return GameBoard.TieSymbol;
+        
+        return null;
     }
 
     enum LineType
